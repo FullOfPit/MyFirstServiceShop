@@ -44,9 +44,10 @@ public class ShopService {
         }
         if (order.getClass() == Order.class) {
             this.orderRepo.add((ArrayList<Product>) ((Order) order).getProducts());
-        }
-        if (Objects.equals(order.getClass(), ArrayList.class)) {
+        } else if (Objects.equals(order.getClass(), ArrayList.class)) {
             this.orderRepo.add((ArrayList<Product>) order);
+        } else {
+            throw new RuntimeException("You have entered an inadequate order format");
         }
     }
 

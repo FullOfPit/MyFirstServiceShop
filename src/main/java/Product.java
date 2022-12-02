@@ -1,15 +1,9 @@
-package Shop1;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
 public class Product {
+    int id;
     String name;
-    String id;
-
-    public Product() {
-
-    }
 }

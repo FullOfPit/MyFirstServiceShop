@@ -32,11 +32,16 @@ public class OrderRepo {
         throw new RuntimeException("MyShop.Order not registered");
     }
 
-    public void add(ArrayList<Product> newOrder) {
+    public void add(Object order) {
         if (this.orders == null) {
             this.orders = new ArrayList<>();
-            this.orders.add(new Order(1, newOrder));
         }
-        this.orders.add(new Order(this.orders.size() + 1, newOrder));
+        if (order.getClass() == Order.class) {
+            this.orders.add(new Order(this.orders.size() + 1, ((Order) order).getProducts()));
+
+        } else if (order.getClass() == ArrayList.class) {
+            this.orders.add(new Order(this.orders.size() + 1, (ArrayList<Product>) order));
+        }
+
     }
 }

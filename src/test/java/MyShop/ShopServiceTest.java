@@ -16,12 +16,11 @@ class ShopServiceTest {
 
         return new ArrayList<>(
                 Stream.of(
-                        new Product(1, "bread"),
-                        new Product(2, "milk"),
-                        new Product(3, "honey")
+                        new Product(1, "1"),
+                        new Product(2, "2"),
+                        new Product(3, "3")
                 ).collect(Collectors.toList())
         );
-
     }
 
     ProductRepo generateTestProductRepo() {
@@ -29,15 +28,19 @@ class ShopServiceTest {
     }
 
     Order generateTestOrder() {
-        return new Order(-1, generateTestProductList());
+        return new Order(1, generateTestProductList());
+    }
+    List<Order> generateTestOrderList() {
+        return Stream.of(generateTestOrder()).collect(Collectors.toList());
+
     }
 
-    OrderRepo gerenateTestOrderRepo() {
-        return new OrderRepo(
-                Stream.of(generateTestOrder()).collect(Collectors.toList())
-        );
+    OrderRepo generateTestOrderRepo() {
+        return new OrderRepo(generateTestOrderList());
     }
 
+
+    //                          -----------------------Testing------------------------
     @Test
     void listProducts_ReturnsListOfProducts() {
         //Given
@@ -52,88 +55,40 @@ class ShopServiceTest {
     @Test
     void listOrders_ReturnListOfOrders() {
         // Given
-        Product bread = new Product(1, "bread");
-        Product milk = new Product(2, "milk");
-        Product honey = new Product(3, "honey");
-
-        List<Product> testProductList = new ArrayList<>();
-        testProductList.add(bread);
-        testProductList.add(milk);
-        testProductList.add(honey);
-
-        List<Order> myTestOrderList = new ArrayList<>();
-        myTestOrderList.add(new Order(1, testProductList));
-
-        OrderRepo myTestOrderRepo = new OrderRepo(myTestOrderList);
-
-        ShopService myTestShop = new ShopService(null, myTestOrderRepo);
+        ShopService myTestShop = new ShopService(null, generateTestOrderRepo());
         // When
         List<Order> actual = myTestShop.listOrders();
         // Then
-        Assertions.assertEquals(myTestOrderList ,actual);
+        Assertions.assertEquals(generateTestOrderList() ,actual);
 
     }
 
     @Test
     void getProduct_byProduct() {
         //Given
-        Product bread = new Product(1, "bread");
-        Product milk = new Product(2, "milk");
-        Product honey = new Product(3, "honey");
-
-        List<Product> testProductList = new ArrayList<>();
-        testProductList.add(bread);
-        testProductList.add(milk);
-        testProductList.add(honey);
-
-        ProductRepo testProductRepo = new ProductRepo();
-        testProductRepo.products = testProductList;
-
-        ShopService myTestShop = new ShopService(testProductRepo, null);
+        ShopService myTestShop = new ShopService(generateTestProductRepo(), null);
         //When
-        Product actual = myTestShop.getProduct(milk);
+        Product actual = myTestShop.getProduct(new Product(2, "2"));
         //Then
-        Assertions.assertEquals(milk, actual);
+        Assertions.assertEquals(new Product(2, "2"), actual);
     }
 
     @Test
     void getProduct_byID() {
-        Product bread = new Product(1, "bread");
-        Product milk = new Product(2, "milk");
-        Product honey = new Product(3, "honey");
-
-        List<Product> testProductList = new ArrayList<>();
-        testProductList.add(bread);
-        testProductList.add(milk);
-        testProductList.add(honey);
-
-        ProductRepo testProductRepo = new ProductRepo();
-        testProductRepo.products = testProductList;
-
-        ShopService myTestShop = new ShopService(testProductRepo, null);
+        //Given
+        ShopService myTestShop = new ShopService(generateTestProductRepo(), null);
         //When
         Product actual = myTestShop.getProduct(2);
         //Then
-        Assertions.assertEquals(milk, actual);
+        Assertions.assertEquals(new Product(2, "2"), actual);
 
     }
 
     @Test
     void getProduct_byID_ThrowRunExcIfIDNotRegistered() {
-        Product bread = new Product(1, "bread");
-        Product milk = new Product(2, "milk");
-        Product honey = new Product(3, "honey");
-
-        List<Product> testProductList = new ArrayList<>();
-        testProductList.add(bread);
-        testProductList.add(milk);
-        testProductList.add(honey);
-
-        ProductRepo testProductRepo = new ProductRepo();
-        testProductRepo.products = testProductList;
-
-        ShopService myTestShop = new ShopService(testProductRepo, null);
-        //When
+        //Given
+        ShopService myTestShop = new ShopService(generateTestProductRepo(), null);
+        //When - Then
 
         try {
             Product actual = myTestShop.getProduct(4);
@@ -146,25 +101,11 @@ class ShopServiceTest {
 
     @Test
     void getProduct_byID_ThrowRunExcIfIProductNotRegistered() {
-            Product bread = new Product(1, "bread");
-            Product milk = new Product(2, "milk");
-            Product honey = new Product(3, "honey");
-
-            Product cookies = new Product(4, "cookies");
-
-            List<Product> testProductList = new ArrayList<>();
-            testProductList.add(bread);
-            testProductList.add(milk);
-            testProductList.add(honey);
-
-            ProductRepo testProductRepo = new ProductRepo();
-            testProductRepo.products = testProductList;
-
-            ShopService myTestShop = new ShopService(testProductRepo, null);
-            //When
-
+            //Given
+            ShopService myTestShop = new ShopService(generateTestProductRepo(), null);
+            //When - Then
             try {
-                Product actual = myTestShop.getProduct(cookies);
+                Product actual = myTestShop.getProduct(new Product(4, "4"));
                 Assertions.fail();
             } catch (RuntimeException e) {
                 Assertions.assertEquals("MyShop.Product not registered", e.getMessage());
@@ -175,69 +116,29 @@ class ShopServiceTest {
         @Test
         void getOrder_byOrder() {
             // Given
-            Product bread = new Product(1, "bread");
-            Product milk = new Product(2, "milk");
-            Product honey = new Product(3, "honey");
-
-            List<Product> testProductList = new ArrayList<>();
-            testProductList.add(bread);
-            testProductList.add(milk);
-            testProductList.add(honey);
-
-            List<Order> myTestOrderList = new ArrayList<>();
-            myTestOrderList.add(new Order(1, testProductList));
-
-            OrderRepo myTestOrderRepo = new OrderRepo(myTestOrderList);
-
-            ShopService myTestShop = new ShopService(null, myTestOrderRepo);
+            ShopService myTestShop = new ShopService(null, generateTestOrderRepo());
             // When
-            Order actual = myTestShop.getOrder(new Order(1, testProductList));
+            Order actual = myTestShop.getOrder(new Order(1, generateTestProductList()));
             // Then
-            Assertions.assertEquals(new Order(1, testProductList), actual);
+            Assertions.assertEquals(generateTestOrder(), actual);
         }
 
     @Test
     void getOrder_byID() {
         // Given
-        Product bread = new Product(1, "bread");
-        Product milk = new Product(2, "milk");
-        Product honey = new Product(3, "honey");
-
-        List<Product> testProductList = new ArrayList<>();
-        testProductList.add(bread);
-        testProductList.add(milk);
-        testProductList.add(honey);
-
-        List<Order> myTestOrderList = new ArrayList<>();
-        myTestOrderList.add(new Order(1, testProductList));
-
-        OrderRepo myTestOrderRepo = new OrderRepo(myTestOrderList);
-
-        ShopService myTestShop = new ShopService(null, myTestOrderRepo);
+        ShopService myTestShop = new ShopService(null, generateTestOrderRepo());
         // When
         Order actual = myTestShop.getOrder(1);
         // Then
-        Assertions.assertEquals(new Order(1, testProductList), actual);
+        Assertions.assertEquals(new Order(1, generateTestProductList()), actual);
     }
 
     @Test
     void addOrder_AddOrderToEmptyOrderRepo_AsOrderObject() {
-        Product bread = new Product(1, "bread");
-        Product milk = new Product(2, "milk");
-        Product honey = new Product(3, "honey");
-
-        List<Product> testProductList = new ArrayList<>();
-        testProductList.add(bread);
-        testProductList.add(milk);
-        testProductList.add(honey);
-
         ShopService myTestShop = new ShopService(null, null);
-        myTestShop.addOrder(new Order(1, testProductList));
+        myTestShop.addOrder(generateTestOrder());
 
-        List<Order> myTestOrderList = new ArrayList<>();
-        myTestOrderList.add(new Order(1, testProductList));
-
-        OrderRepo myTestOrderRepo = new OrderRepo(myTestOrderList);
+        OrderRepo myTestOrderRepo = generateTestOrderRepo();
         //When
         OrderRepo actual = myTestShop.orderRepo;
         //
@@ -246,47 +147,23 @@ class ShopServiceTest {
 
     @Test
     void addOrder_AddOrderToEmptyOrderRepo_AsOrderProductList() {
-        Product bread = new Product(1, "bread");
-        Product milk = new Product(2, "milk");
-        Product honey = new Product(3, "honey");
-
-        List<Product> testProductList = new ArrayList<>();
-        testProductList.add(bread);
-        testProductList.add(milk);
-        testProductList.add(honey);
-
         ShopService myTestShop = new ShopService(null, null);
-        myTestShop.addOrder(testProductList);
+        myTestShop.addOrder(generateTestOrder());
 
-        List<Order> myTestOrderList = new ArrayList<>();
-        myTestOrderList.add(new Order(1, testProductList));
-
-        OrderRepo myTestOrderRepo = new OrderRepo(myTestOrderList);
         //When
         OrderRepo actual = myTestShop.orderRepo;
         //
-        Assertions.assertEquals(myTestOrderRepo, actual);
+        Assertions.assertEquals(generateTestOrderRepo(), actual);
     }
 
     @Test
     void addOrder_AddOrderToExistingOrderRepo_AsOrderObject() {
-        Product bread = new Product(1, "bread");
-        Product milk = new Product(2, "milk");
-        Product honey = new Product(3, "honey");
 
-        List<Product> testProductList = new ArrayList<>();
-        testProductList.add(bread);
-        testProductList.add(milk);
-        testProductList.add(honey);
+        ShopService myTestShop = new ShopService(null, generateTestOrderRepo());
+        myTestShop.addOrder(new Order(2, generateTestProductList()));
 
-        List<Order> myTestOrderList = new ArrayList<>();
-        myTestOrderList.add(new Order(1, testProductList));
-
-        ShopService myTestShop = new ShopService(null, new OrderRepo(myTestOrderList));
-        myTestShop.addOrder(new Order(1, testProductList));
-
-        OrderRepo myTestOrderRepo = new OrderRepo(myTestOrderList);
-        myTestOrderRepo.add((ArrayList<Product>) testProductList);
+        OrderRepo myTestOrderRepo = new OrderRepo(generateTestOrderList());
+        myTestOrderRepo.add(generateTestOrder());
         //When
         OrderRepo actual = myTestShop.orderRepo;
         //
@@ -295,23 +172,12 @@ class ShopServiceTest {
 
     @Test
     void addOrder_AddOrderToExistingOrderRepo_AsProductList() {
-        Product bread = new Product(1, "bread");
-        Product milk = new Product(2, "milk");
-        Product honey = new Product(3, "honey");
 
-        List<Product> testProductList = new ArrayList<>();
-        testProductList.add(bread);
-        testProductList.add(milk);
-        testProductList.add(honey);
+        ShopService myTestShop = new ShopService(null, generateTestOrderRepo());
+        myTestShop.addOrder(generateTestProductList());
 
-        List<Order> myTestOrderList = new ArrayList<>();
-        myTestOrderList.add(new Order(1, testProductList));
-
-        ShopService myTestShop = new ShopService(null, new OrderRepo(myTestOrderList));
-        myTestShop.addOrder(testProductList);
-
-        OrderRepo myTestOrderRepo = new OrderRepo(myTestOrderList);
-        myTestOrderRepo.add((ArrayList<Product>) testProductList);
+        OrderRepo myTestOrderRepo = generateTestOrderRepo();
+        myTestOrderRepo.add((ArrayList<Product>) generateTestProductList());
         //When
         OrderRepo actual = myTestShop.orderRepo;
         //

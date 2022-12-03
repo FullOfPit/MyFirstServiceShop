@@ -1,3 +1,5 @@
+package MyShop;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -18,7 +20,7 @@ public class OrderRepo {
         if (this.orders.contains(order)) {
             return order;
         }
-        throw new RuntimeException("Order not registered");
+        throw new RuntimeException("MyShop.Order not registered");
     }
 
     public Order getOrderByID(int ID) {
@@ -27,7 +29,7 @@ public class OrderRepo {
                 return order;
             }
         }
-        throw new RuntimeException("Order not registered");
+        throw new RuntimeException("MyShop.Order not registered");
     }
 
     public void add(ArrayList<Product> newOrder) {

@@ -1,3 +1,5 @@
+package MyShop;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

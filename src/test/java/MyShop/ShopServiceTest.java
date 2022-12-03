@@ -1,33 +1,51 @@
+package MyShop;
+
+import MyShop.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 class ShopServiceTest {
+
+    //Setup methods
+    List<Product> generateTestProductList() {
+
+        return new ArrayList<>(
+                Stream.of(
+                        new Product(1, "bread"),
+                        new Product(2, "milk"),
+                        new Product(3, "honey")
+                ).collect(Collectors.toList())
+        );
+
+    }
+
+    ProductRepo generateTestProductRepo() {
+        return new ProductRepo(generateTestProductList());
+    }
+
+    Order generateTestOrder() {
+        return new Order(-1, generateTestProductList());
+    }
+
+    OrderRepo gerenateTestOrderRepo() {
+        return new OrderRepo(
+                Stream.of(generateTestOrder()).collect(Collectors.toList())
+        );
+    }
 
     @Test
     void listProducts_ReturnsListOfProducts() {
         //Given
-        Product bread = new Product(1, "bread");
-        Product milk = new Product(2, "milk");
-        Product honey = new Product(3, "honey");
-
-        List<Product> testProductList = new ArrayList<>();
-        testProductList.add(bread);
-        testProductList.add(milk);
-        testProductList.add(honey);
-
-        ProductRepo testProductRepo = new ProductRepo();
-        testProductRepo.products = testProductList;
-
-        ShopService myTestShop = new ShopService(testProductRepo, null);
+        ShopService myTestShop = new ShopService(generateTestProductRepo(), null);
         //When
         List<Product> actual = myTestShop.listProducts();
         //Then
-        Assertions.assertEquals(testProductList, actual);
+        Assertions.assertEquals(generateTestProductList(), actual);
 
     }
 
@@ -121,7 +139,7 @@ class ShopServiceTest {
             Product actual = myTestShop.getProduct(4);
             Assertions.fail();
         } catch (RuntimeException e) {
-            Assertions.assertEquals("Product not registered", e.getMessage());
+            Assertions.assertEquals("MyShop.Product not registered", e.getMessage());
 
         }
     }
@@ -149,7 +167,7 @@ class ShopServiceTest {
                 Product actual = myTestShop.getProduct(cookies);
                 Assertions.fail();
             } catch (RuntimeException e) {
-                Assertions.assertEquals("Product not registered", e.getMessage());
+                Assertions.assertEquals("MyShop.Product not registered", e.getMessage());
 
             }
         }

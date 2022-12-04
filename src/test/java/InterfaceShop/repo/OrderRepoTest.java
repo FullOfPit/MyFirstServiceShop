@@ -135,4 +135,47 @@ class OrderRepoTest {
         //Then
         Assertions.assertEquals(new Order("Test Recipient", generateTestProductList()), actual);
     }
+
+    @Test
+    void orderRepo_listMethod_returnsEmptyMapWhenItShouldBeEmpty() {
+        //Given
+        OrderRepo testOrderRepo = new OrderRepo();
+        //When
+        Map<Integer, LinkedList<Order>> actual = testOrderRepo.list();
+        //Then
+        Assertions.assertEquals(new HashMap<Integer, LinkedList<Order>>(), actual);
+    }
+
+    @Test
+    void orderRepo_listMethod_returnsMapWithOneItemSet() {
+        //Given
+        OrderRepo testOrderRepo = new OrderRepo();
+        testOrderRepo.addOrder(1, generateTestOrder());
+
+        Map<Integer, LinkedList<Order>> testMap = new HashMap<Integer, LinkedList<Order>>();
+        testMap.put(1, new LinkedList<>());
+        testMap.get(1).add(generateTestOrder());
+        //When
+        Map<Integer, LinkedList<Order>> actual = testOrderRepo.list();
+        //Then
+        Assertions.assertEquals(testMap, actual);
+    }
+
+    @Test
+    void orderRepo_listMethod_returnsMapWithTwoItemSet() {
+        //Given
+        OrderRepo testOrderRepo = new OrderRepo();
+        testOrderRepo.addOrder(1, generateTestOrder());
+        testOrderRepo.addOrder(generateTestOrder());
+
+        Map<Integer, LinkedList<Order>> testMap = new HashMap<Integer, LinkedList<Order>>();
+        testMap.put(1, new LinkedList<>());
+        testMap.get(1).add(generateTestOrder());
+        testMap.put(new HCG("Test Recipient").getHCG(), new LinkedList<>());
+        testMap.get(new HCG("Test Recipient").getHCG()).add(generateTestOrder());
+        //When
+        Map<Integer, LinkedList<Order>> actual = testOrderRepo.list();
+        //Then
+        Assertions.assertEquals(testMap, actual);
+    }
 }

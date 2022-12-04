@@ -16,6 +16,11 @@ import java.util.Map;
 public class OrderRepo {
     public Map<Integer, LinkedList<Order>> orderMap = new HashMap<>();
 
+    public Map<Integer, LinkedList<Order>> list() {
+        return this.orderMap;
+    }
+
+
     public void addOrder(List<Product> productList) {
         int hashCode = new HCG("Unknown recipient").getHCG();
         Order newOrder = new Order("Unknown recipient", productList);
@@ -44,6 +49,8 @@ public class OrderRepo {
         } else {
             this.orderMap.get(ID).add(order);
         }
+
+
 
     }
 

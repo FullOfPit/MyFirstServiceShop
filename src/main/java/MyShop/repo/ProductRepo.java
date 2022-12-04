@@ -1,5 +1,6 @@
-package MyShop;
+package MyShop.repo;
 
+import MyShop.model.Product;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,7 +20,7 @@ public class ProductRepo {
         if (this.products.contains(product)) {
             return product;
         }
-        throw new RuntimeException("MyShop.Product not registered");
+        throw new RuntimeException("MyShop.model.Product not registered");
     }
     public Product getProductByID(int ID) {
         for (Product product : this.products) {
@@ -27,6 +28,6 @@ public class ProductRepo {
                 return product;
             }
         }
-        throw new RuntimeException("MyShop.Product not registered");
+        throw new RuntimeException("MyShop.model.Product not registered");
     }
 }

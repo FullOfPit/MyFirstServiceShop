@@ -1,6 +1,10 @@
 package MyShop;
 
-import MyShop.*;
+import MyShop.model.Order;
+import MyShop.model.Product;
+import MyShop.repo.OrderRepo;
+import MyShop.repo.ProductRepo;
+import MyShop.service.ShopService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -94,7 +98,7 @@ class ShopServiceTest {
             Product actual = myTestShop.getProduct(4);
             Assertions.fail();
         } catch (RuntimeException e) {
-            Assertions.assertEquals("MyShop.Product not registered", e.getMessage());
+            Assertions.assertEquals("MyShop.model.Product not registered", e.getMessage());
 
         }
     }
@@ -108,7 +112,7 @@ class ShopServiceTest {
                 Product actual = myTestShop.getProduct(new Product(4, "4"));
                 Assertions.fail();
             } catch (RuntimeException e) {
-                Assertions.assertEquals("MyShop.Product not registered", e.getMessage());
+                Assertions.assertEquals("MyShop.model.Product not registered", e.getMessage());
 
             }
         }

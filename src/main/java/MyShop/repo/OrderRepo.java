@@ -1,5 +1,7 @@
-package MyShop;
+package MyShop.repo;
 
+import MyShop.model.Order;
+import MyShop.model.Product;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -20,7 +22,7 @@ public class OrderRepo {
         if (this.orders.contains(order)) {
             return order;
         }
-        throw new RuntimeException("MyShop.Order not registered");
+        throw new RuntimeException("MyShop.model.Order not registered");
     }
 
     public Order getOrderByID(int ID) {
@@ -29,7 +31,7 @@ public class OrderRepo {
                 return order;
             }
         }
-        throw new RuntimeException("MyShop.Order not registered");
+        throw new RuntimeException("MyShop.model.Order not registered");
     }
 
     public void add(Object order) {

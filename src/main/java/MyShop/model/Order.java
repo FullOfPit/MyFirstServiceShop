@@ -1,11 +1,13 @@
-package MyShop;
+package MyShop.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
-public class Product {
+public class Order {
     int id;
-    String name;
+    List<Product> products;
 }

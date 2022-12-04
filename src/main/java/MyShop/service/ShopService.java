@@ -1,5 +1,9 @@
-package MyShop;
+package MyShop.service;
 
+import MyShop.model.Order;
+import MyShop.model.Product;
+import MyShop.repo.OrderRepo;
+import MyShop.repo.ProductRepo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

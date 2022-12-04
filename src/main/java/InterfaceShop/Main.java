@@ -1,17 +1,19 @@
 package InterfaceShop;
 
-import java.util.ArrayList;
+import InterfaceShop.model.Bakery;
+import InterfaceShop.model.Diary;
+import InterfaceShop.repo.ProductRepo;
+
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) {
 
-        ProductRepo newProductRepo = new ProductRepo(
-                Stream.of(new Bread(), new Cheese(), new Cheese()).collect(Collectors.toList())
-        );
+        Diary milk = new Diary("Milk");
+        Diary cheese = new Diary("Cheese");
+        System.out.println(milk.getID());
+        System.out.println(cheese.getID());
 
-        newProductRepo.list().add(new Bread());
-        System.out.println(newProductRepo.list());
     }
 }

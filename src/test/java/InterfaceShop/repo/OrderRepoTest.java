@@ -193,4 +193,17 @@ class OrderRepoTest {
         //Then
         Assertions.assertEquals(testList, actual);
     }
+
+    @Test
+    void orderRepo_getMethod_throwExceptionWhenIDNotRegistered() {
+        //Given
+        OrderRepo testOrderRepo = new OrderRepo();
+        //When - Then
+        try {
+            testOrderRepo.get(1);
+            Assertions.fail();
+        } catch (RuntimeException e) {
+            Assertions.assertTrue(true);
+        }
+    }
 }

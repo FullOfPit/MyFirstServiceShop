@@ -21,7 +21,10 @@ public class OrderRepo {
     }
 
     public LinkedList<Order> get(int ID) {
-        return this.orderMap.get(ID);
+        if (this.orderMap.get(ID) != null) {
+            return this.orderMap.get(ID);
+        }
+        throw new RuntimeException("The ID you entered is not registered");
     }
 
     public void addOrder(List<Product> productList) {

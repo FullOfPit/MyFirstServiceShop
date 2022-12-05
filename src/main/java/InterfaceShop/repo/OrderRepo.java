@@ -20,6 +20,9 @@ public class OrderRepo {
         return this.orderMap;
     }
 
+    public LinkedList<Order> get(int ID) {
+        return this.orderMap.get(ID);
+    }
 
     public void addOrder(List<Product> productList) {
         int hashCode = new HCG("Unknown recipient").getHCG();

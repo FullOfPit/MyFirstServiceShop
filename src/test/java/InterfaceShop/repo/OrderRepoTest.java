@@ -178,4 +178,19 @@ class OrderRepoTest {
         //Then
         Assertions.assertEquals(testMap, actual);
     }
+
+    @Test
+    void orderRepo_getMethod_getLinkedListThroughIDIfLinkedListPresent() {
+        //Given
+        OrderRepo testOrderRepo = new OrderRepo();
+        testOrderRepo.addOrder(1, generateTestOrder());
+
+        LinkedList<Order> testList = new LinkedList<>();
+        testList.add(generateTestOrder());
+
+        //When
+        LinkedList<Order> actual = testOrderRepo.get(1);
+        //Then
+        Assertions.assertEquals(testList, actual);
+    }
 }

@@ -2,16 +2,20 @@ package InterfaceShop.repo;
 
 import InterfaceShop.model.Product;
 
-import java.util.ArrayList;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ProductRepo{
 
-    public List<Product> productList = new ArrayList<>();
+    public Map<Integer, Product> productMap = new HashMap<>();
 
     public List<Product> list() {
-        return this.productList;
+        return this.productMap.values().stream().toList();
     }
+
+
 
 
 

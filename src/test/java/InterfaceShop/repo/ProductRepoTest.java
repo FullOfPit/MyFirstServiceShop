@@ -2,11 +2,14 @@ package InterfaceShop.repo;
 
 import InterfaceShop.model.Diary;
 import InterfaceShop.model.Product;
+import InterfaceShop.service.HCG;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 class ProductRepoTest {
@@ -22,23 +25,27 @@ class ProductRepoTest {
         return testProductList;
     }
 
+    public int hcg(String name) {
+        return new HCG(name).getHCG();
+    }
+
     @Test
     void productRepo_instantiatesWithEmptyList() {
         //Given
         ProductRepo newTestProductRepo = new ProductRepo();
         //When
-        List<Product> actual = newTestProductRepo.productList;
+       Map<Integer, Product> actual = newTestProductRepo.productMap;
         //Then
-        Assertions.assertEquals(new ArrayList<>(), actual);
+        Assertions.assertEquals(new HashMap<>(), actual);
     }
 
     @Test
-    void productRepo_instantiatesWithEmptyList_addProductManually() {
+    void productRepo_instantiatesWithEmptyList_addProductManually_AtIDOne() {
         //Given
         ProductRepo newTestProductRepo = new ProductRepo();
-        newTestProductRepo.productList.add(generateTestProduct());
+        newTestProductRepo.productMap.put(1,generateTestProduct());
         //When
-        Product actual = newTestProductRepo.productList.get(0);
+        Product actual = newTestProductRepo.productMap.get(1);
         //Then
         Assertions.assertEquals(generateTestProduct(), actual);
     }
@@ -47,16 +54,15 @@ class ProductRepoTest {
     void productRepo_instantiatesWithEmptyList_addTwoProductsManually_TestForLength() {
         //Given
         ProductRepo newTestProductRepo = new ProductRepo();
-        newTestProductRepo.productList.add(generateTestProduct());
-        newTestProductRepo.productList.add(generateTestProduct());
+        newTestProductRepo.productMap.put(hcg(generateTestProduct().getName()),generateTestProduct());
         //When
-        int actual = newTestProductRepo.productList.size();
+        Product actual = newTestProductRepo.productMap.get(hcg(generateTestProduct().getName()));
         //Then
-        Assertions.assertEquals(2, actual);
+        Assertions.assertEquals(generateTestProduct(), actual);
     }
 
     @Test
-    void listMethod_returnsEmptyListWhenNoListAddedToRepo() {
+    void listMethod_returnsEmptyMapWhenNoMapAddedToRepo() {
         //Given
         ProductRepo newTestProductRepo = new ProductRepo();
         //When
@@ -66,16 +72,28 @@ class ProductRepoTest {
     }
 
     @Test
-    void listMethod_returnsListWithOneSpecificItemWhenSaidItemIsAdded() {
+    void listMethod_returnsListWithOneSpecificItemWhenSaidItemIsAddedToIndex1() {
         //Given
         ProductRepo newTestProductRepo = new ProductRepo();
-        newTestProductRepo.productList.add(generateTestProduct());
+        newTestProductRepo.productMap.put(1, generateTestProduct());
         //When
         List<Product> actual = newTestProductRepo.list();
         //Then
         Assertions.assertEquals(generateTestProductList(), actual);
-
     }
+
+    @Test
+    void listMethod_returnsListWithOneSpecificItemWhenSaidItemIsAddedToHCGIndex() {
+        //Given
+        ProductRepo newTestProductRepo = new ProductRepo();
+        newTestProductRepo.productMap.put(hcg(generateTestProduct().getName()), generateTestProduct());
+        //When
+        List<Product> actual = newTestProductRepo.list();
+        //Then
+        Assertions.assertEquals(generateTestProductList(), actual);
+    }
+
+
 
 
 

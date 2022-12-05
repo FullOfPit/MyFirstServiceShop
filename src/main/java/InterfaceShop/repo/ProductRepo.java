@@ -1,5 +1,6 @@
 package InterfaceShop.repo;
 
+import InterfaceShop.model.AbstractProduct;
 import InterfaceShop.model.Product;
 import InterfaceShop.service.HCG;
 
@@ -8,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ProductRepo{
+public class ProductRepo extends AbstractRepository<Product> {
 
     public Map<Integer, Product> productMap = new HashMap<>();
 
@@ -29,9 +30,5 @@ public class ProductRepo{
         }
         return this.productMap.get(ID);
     }
-
-
-
-
 
 }

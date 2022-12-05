@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 @NoArgsConstructor
-public class OrderRepo {
+public class OrderRepo extends AbstractRepository<Order>{
     public Map<Integer, LinkedList<Order>> orderMap = new HashMap<>();
 
     public Map<Integer, LinkedList<Order>> list() {

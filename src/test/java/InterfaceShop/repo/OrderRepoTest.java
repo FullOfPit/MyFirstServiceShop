@@ -224,4 +224,18 @@ class OrderRepoTest {
 
     }
 
+
+    @Test
+    void orderRepo_getMethod_throwExceptionWhenStringNotRegistered() {
+        //Given
+        OrderRepo testOrderRepo = new OrderRepo();
+        //When - Then
+        try {
+            testOrderRepo.get("Test Recipient");
+            Assertions.fail();
+        } catch (RuntimeException e) {
+            Assertions.assertTrue(true);
+        }
+    }
+
 }

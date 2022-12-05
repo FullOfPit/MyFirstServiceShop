@@ -29,7 +29,11 @@ public class OrderRepo {
 
     public LinkedList<Order> get(String name) {
         int hashCode = new HCG(name).getHCG();
-        return this.orderMap.get(hashCode);
+        if (this.orderMap.get(hashCode) != null) {
+            return this.orderMap.get(hashCode);
+        }
+        throw new RuntimeException("No Order registered under the entered name");
+
     }
 
     public void addOrder(List<Product> productList) {
@@ -60,9 +64,6 @@ public class OrderRepo {
         } else {
             this.orderMap.get(ID).add(order);
         }
-
-
-
     }
 
 

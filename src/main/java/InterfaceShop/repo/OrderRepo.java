@@ -1,7 +1,5 @@
 package InterfaceShop.repo;
 
-
-
 import InterfaceShop.model.Order;
 import InterfaceShop.model.Product;
 import InterfaceShop.service.HCG;
@@ -45,7 +43,6 @@ public class OrderRepo {
         } else {
             this.orderMap.get(hashCode).add(newOrder);
         }
-
     }
 
     public void addOrder(Order order) {

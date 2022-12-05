@@ -9,6 +9,10 @@ public class ProductRepo{
 
     public List<Product> productList = new ArrayList<>();
 
+    public List<Product> list() {
+        return this.productList;
+    }
+
 
 
 }

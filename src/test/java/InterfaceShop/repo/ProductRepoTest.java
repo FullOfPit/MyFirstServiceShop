@@ -16,12 +16,12 @@ class ProductRepoTest {
 
     //Auxilliary
     public Product generateTestProduct() {
-        return new Diary("Milk");
+        return new Diary("Test Product");
     }
 
     public List<Product> generateTestProductList() {
         List<Product> testProductList = new ArrayList<>();
-        testProductList.add(new Diary("Milk"));
+        testProductList.add(new Diary("Test Product"));
         return testProductList;
     }
 
@@ -93,9 +93,55 @@ class ProductRepoTest {
         Assertions.assertEquals(generateTestProductList(), actual);
     }
 
+    @Test
+    void getMethodString_returnsProduct_ByNameString() {
+        //Given
+        ProductRepo newTestProductRepo = new ProductRepo();
+        newTestProductRepo.productMap.put(hcg(generateTestProduct().getName()), generateTestProduct());
+        //When
+        Product actual = newTestProductRepo.get("Test Product");
+        //Then
+        Assertions.assertEquals(generateTestProduct(), actual);
+    }
 
+    @Test
+    void getMethodString_throwsExc_EnteredNonExistentProductName() {
+        //Given
+        ProductRepo newTestProductRepo = new ProductRepo();
+        newTestProductRepo.productMap.put(hcg(generateTestProduct().getName()), generateTestProduct());
+        //When -- Then
+        try {
+            newTestProductRepo.get("Cheese");
+            Assertions.fail();
+        } catch (RuntimeException e) {
+            Assertions.assertEquals("Product name not registered", e.getMessage());
+        }
+    }
 
+    @Test
+    void getMethodID_returnsProduct_ByPutID() {
+        //Given
+        ProductRepo newTestProductRepo = new ProductRepo();
+        newTestProductRepo.productMap.put(hcg(generateTestProduct().getName()), generateTestProduct());
+        //When
+        Product actual = newTestProductRepo.get(hcg("Test Product"));
+        //Then
+        Assertions.assertEquals(generateTestProduct(), actual);
+    }
 
+    @Test
+    void getMethodInt_throwsExc_EnteredNonExistentProductID() {
+        //Given
+        ProductRepo newTestProductRepo = new ProductRepo();
+        newTestProductRepo.productMap.put(hcg(generateTestProduct().getName()), generateTestProduct());
+        //When -- Then
+        try {
+            newTestProductRepo.get(2);
+            Assertions.fail();
+        } catch (RuntimeException e) {
+            Assertions.assertEquals("Product ID not registered", e.getMessage());
+        }
+    }
 
 
 }

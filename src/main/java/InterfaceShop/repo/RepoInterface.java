@@ -1,11 +1,11 @@
 package InterfaceShop.repo;
 
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Map;
 
 public interface RepoInterface<O> {
-    List<O> list();
+    Map<Integer, O> list();
     O get(O object);
     void add(O object);
 

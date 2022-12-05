@@ -133,9 +133,9 @@ class ProductRepoTest {
     void getMethodID_returnsProduct_ByPutID() {
         //Given
         ProductRepo newTestProductRepo = new ProductRepo();
-        newTestProductRepo.productMap.put(hcg(generateTestProduct().getName()), generateTestProduct());
+        newTestProductRepo.productMap.put(2, generateTestProduct());
         //When
-        Product actual = newTestProductRepo.get(hcg("Test Product"));
+        Product actual = newTestProductRepo.get(2);
         //Then
         Assertions.assertEquals(generateTestProduct(), actual);
     }
@@ -150,7 +150,7 @@ class ProductRepoTest {
             newTestProductRepo.get(2);
             Assertions.fail();
         } catch (RuntimeException e) {
-            Assertions.assertEquals("Product ID not registered", e.getMessage());
+            Assertions.assertEquals("ID not registered", e.getMessage());
         }
     }
 

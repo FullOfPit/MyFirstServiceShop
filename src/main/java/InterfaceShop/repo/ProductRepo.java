@@ -2,6 +2,7 @@ package InterfaceShop.repo;
 
 import InterfaceShop.model.Product;
 import InterfaceShop.service.HCG;
+import lombok.Data;
 
 
 import java.util.HashMap;
@@ -15,18 +16,21 @@ public class ProductRepo extends AbstractRepository<Product> {
         return this.productMap;
     }
 
-    public Product get(String name) {
-        if (this.productMap.get(new HCG(name).getHCG()) == null) {
-            throw new RuntimeException("Product name not registered");
+    /*
+    public Product get(int ID) {
+        if (this.productMap.get(ID) != null) {
+            return this.productMap.get(ID);
         }
-        return this.productMap.get(new HCG(name).getHCG());
+        throw new RuntimeException("ID not registered");
     }
 
-    public Product get(int ID) {
-        if (this.productMap.get(ID) == null) {
-            throw new RuntimeException("Product ID not registered");
+     */
+
+    public Product get(String name) {
+        if (this.productMap.get(new HCG(name).getHCG()) != null) {
+            return this.productMap.get(new HCG(name).getHCG());
         }
-        return this.productMap.get(ID);
+        throw new RuntimeException("Product name not registered");
     }
 
 }

@@ -2,9 +2,12 @@ package InterfaceShop.model;
 
 
 import InterfaceShop.service.HCG;
+import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import java.util.Objects;
 
+@Data
 @NoArgsConstructor
 public abstract class AbstractProduct implements Product{
    private String name;
@@ -46,4 +49,6 @@ public abstract class AbstractProduct implements Product{
     public int hashCode() {
         return Objects.hash(getName());
     }
+
+
 }

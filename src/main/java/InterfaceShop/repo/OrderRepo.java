@@ -18,12 +18,18 @@ public class OrderRepo extends AbstractRepository<LinkedList<Order>>{
         return this.orderMap;
     }
 
+
     public LinkedList<Order> get(int ID) {
         if (this.orderMap.get(ID) != null) {
             return this.orderMap.get(ID);
         }
-        throw new RuntimeException("The ID you entered is not registered");
+        throw new RuntimeException("ID not registered");
     }
+
+
+
+
+
 
     public LinkedList<Order> get(String name) {
         int hashCode = new HCG(name).getHCG();
@@ -33,7 +39,6 @@ public class OrderRepo extends AbstractRepository<LinkedList<Order>>{
         throw new RuntimeException("No Order registered under the entered name");
 
     }
-
     public void addOrder(List<Product> productList) {
         int hashCode = new HCG("Unknown recipient").getHCG();
         Order newOrder = new Order("Unknown recipient", productList);
@@ -44,7 +49,6 @@ public class OrderRepo extends AbstractRepository<LinkedList<Order>>{
             this.orderMap.get(hashCode).add(newOrder);
         }
     }
-
     public void addOrder(Order order) {
         int hashCode = new HCG(order.getRecipient()).getHCG();
         if (this.orderMap.get(hashCode) == null) {
@@ -62,10 +66,4 @@ public class OrderRepo extends AbstractRepository<LinkedList<Order>>{
             this.orderMap.get(ID).add(order);
         }
     }
-
-
-
-
-
-
 }

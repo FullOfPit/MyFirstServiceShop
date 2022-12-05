@@ -14,7 +14,7 @@ import java.util.Map;
 
 class ProductRepoTest {
 
-    //Auxilliary
+    //                     ------------- Auxiliary -------------
     public Product generateTestProduct() {
         return new Diary("Test Product");
     }
@@ -25,16 +25,24 @@ class ProductRepoTest {
         return testProductList;
     }
 
+    public Map<Integer, Product> generateTestProductMap() {
+        Map<Integer, Product> testProductMap = new HashMap<>();
+        testProductMap.put(1, generateTestProduct());
+        return testProductMap;
+    }
+
     public int hcg(String name) {
         return new HCG(name).getHCG();
     }
+
+    //                     ------------- Testing -------------
 
     @Test
     void productRepo_instantiatesWithEmptyList() {
         //Given
         ProductRepo newTestProductRepo = new ProductRepo();
         //When
-       Map<Integer, Product> actual = newTestProductRepo.productMap;
+        Map<Integer, Product> actual = newTestProductRepo.productMap;
         //Then
         Assertions.assertEquals(new HashMap<>(), actual);
     }
@@ -66,9 +74,9 @@ class ProductRepoTest {
         //Given
         ProductRepo newTestProductRepo = new ProductRepo();
         //When
-        List<Product> actual = newTestProductRepo.list();
+        Map<Integer, Product> actual = newTestProductRepo.list();
         //Then
-        Assertions.assertEquals(new ArrayList<>(), actual);
+        Assertions.assertEquals(new HashMap<>(), actual);
     }
 
     @Test
@@ -77,9 +85,9 @@ class ProductRepoTest {
         ProductRepo newTestProductRepo = new ProductRepo();
         newTestProductRepo.productMap.put(1, generateTestProduct());
         //When
-        List<Product> actual = newTestProductRepo.list();
+        Map<Integer, Product> actual = newTestProductRepo.list();
         //Then
-        Assertions.assertEquals(generateTestProductList(), actual);
+        Assertions.assertEquals(generateTestProductMap(), actual);
     }
 
     @Test
@@ -87,10 +95,13 @@ class ProductRepoTest {
         //Given
         ProductRepo newTestProductRepo = new ProductRepo();
         newTestProductRepo.productMap.put(hcg(generateTestProduct().getName()), generateTestProduct());
+
+        Map<Integer, Product> newTestMap = new HashMap<>();
+        newTestMap.put(hcg(generateTestProduct().getName()), generateTestProduct());
         //When
-        List<Product> actual = newTestProductRepo.list();
+        Map<Integer, Product> actual = newTestProductRepo.list();
         //Then
-        Assertions.assertEquals(generateTestProductList(), actual);
+        Assertions.assertEquals(newTestMap, actual);
     }
 
     @Test

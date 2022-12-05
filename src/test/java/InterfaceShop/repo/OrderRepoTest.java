@@ -206,4 +206,22 @@ class OrderRepoTest {
             Assertions.assertTrue(true);
         }
     }
+
+    @Test
+    void orderRepo_getMethod_acceptStringAndReturnOrderByRecipientString() {
+        //Given
+        OrderRepo testOrderRepo = new OrderRepo();
+        testOrderRepo.addOrder(generateTestOrder());
+
+        Map<Integer, LinkedList<Order>> testMap = new HashMap<>();
+        int hashCode = new HCG(generateTestOrder().getRecipient()).getHCG();
+        testMap.put(hashCode,  new LinkedList<>());
+        testMap.get(hashCode).add(generateTestOrder());
+        //When
+        LinkedList<Order> actual = testOrderRepo.get("Test Recipient");
+        //Then
+        Assertions.assertEquals(testMap.get(hashCode), actual);
+
+    }
+
 }

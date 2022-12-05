@@ -27,6 +27,11 @@ public class OrderRepo {
         throw new RuntimeException("The ID you entered is not registered");
     }
 
+    public LinkedList<Order> get(String name) {
+        int hashCode = new HCG(name).getHCG();
+        return this.orderMap.get(hashCode);
+    }
+
     public void addOrder(List<Product> productList) {
         int hashCode = new HCG("Unknown recipient").getHCG();
         Order newOrder = new Order("Unknown recipient", productList);
